@@ -1,6 +1,7 @@
 appId: com.samplerecordstudio.app
 productName: Sample Record Studio
 copyright: "Copyright © 2025"
+publish: null
 
 directories:
   buildResources: resources
