@@ -1,0 +1,61 @@
+appId: com.samplerecordstudio.app
+productName: Sample Record Studio
+copyright: "Copyright © 2025"
+
+directories:
+  buildResources: resources
+  output: dist
+
+files:
+  - out/**/*
+  - package.json
+
+extraResources:
+  - from: resources/app.ico
+    to: app.ico
+  - from: resources/drag-icon.png
+    to: drag-icon.png
+  - from: resources/app.icns
+    to: app.icns
+
+# ── Windows ────────────────────────────────────────────────────────────────
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  icon: resources/app.ico
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Sample Record Studio
+
+portable:
+  artifactName: "${productName}-${version}-portable.exe"
+
+# ── macOS ──────────────────────────────────────────────────────────────────
+mac:
+  target:
+    - target: zip
+      arch: [x64, arm64]
+  category: public.app-category.music
+  icon: resources/app.icns
+
+dmg:
+  title: "${productName} ${version}"
+  window:
+    width: 540
+    height: 380
+  contents:
+    - x: 130
+      y: 200
+      type: file
+    - x: 410
+      y: 200
+      type: link
+      path: /Applications
