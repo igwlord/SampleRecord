@@ -1,6 +1,7 @@
 {
   "name": "sample-record-studio",
   "version": "1.0.1",
+  "author": "Sample Record Studio",
   "description": "System audio sampler and recorder for musicians",
   "main": "./out/main/index.js",
   "scripts": {

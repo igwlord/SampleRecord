@@ -1,10 +1,7 @@
 name: Build macOS
 
 on:
-  # Run manually from the GitHub Actions tab
   workflow_dispatch:
-
-  # Or automatically on version tags (e.g. git tag v1.0.1 && git push --tags)
   push:
     tags:
       - 'v*'
@@ -14,43 +11,29 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      # ── Checkout ────────────────────────────────────────────────────────────
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ── Node.js ─────────────────────────────────────────────────────────────
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
-      # ── Install dependencies ─────────────────────────────────────────────────
       - name: Install dependencies
         run: npm ci
 
-      # ── Build renderer + main (electron-vite) ────────────────────────────────
       - name: Build
         run: npm run build
 
-      # ── Package for macOS — x64 (Intel) ──────────────────────────────────────
-      - name: Package macOS x64
-        run: npx electron-builder --mac --x64
-        env:
-          # Skip code signing (unsigned build for distribution via direct download)
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-
-      # ── Package for macOS — arm64 (Apple Silicon) ────────────────────────────
-      - name: Package macOS arm64
-        run: npx electron-builder --mac --arm64
+      - name: Package macOS (x64 + arm64)
+        run: npx electron-builder --mac --x64 --arm64 --publish never
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
-      # ── List output ──────────────────────────────────────────────────────────
       - name: List dist/
         run: ls -lh dist/
 
-      # ── Upload DMG + ZIP as GitHub artifacts ─────────────────────────────────
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
