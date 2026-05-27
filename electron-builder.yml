@@ -35,6 +35,7 @@ nsis:
   createDesktopShortcut: true
   createStartMenuShortcut: true
   shortcutName: Sample Record Studio
+  artifactName: "Sample-Record-Studio-Setup.exe"
 
 portable:
   artifactName: "${productName}-${version}-portable.exe"
